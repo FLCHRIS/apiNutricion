@@ -36,7 +36,7 @@ public class PacienteWS {
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaPaciente obtenerPorId(@PathParam("idMedico") Integer idMedico) {
         
-        if (idMedico <= 0) {
+        if (idMedico < 1) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
@@ -50,7 +50,7 @@ public class PacienteWS {
     public RespuestaPaciente eliminar(@FormParam("idPaciente") Integer idPaciente) {
         RespuestaPaciente respuesta = null;
 
-        if (idPaciente == null || idPaciente <= 0) {
+        if (idPaciente == null || idPaciente < 1) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
