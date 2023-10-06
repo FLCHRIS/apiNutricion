@@ -35,6 +35,11 @@ public class PacienteWS {
     @Path("obtenerPorId/{idMedico}")
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaPaciente obtenerPorId(@PathParam("idMedico") Integer idMedico) {
+        
+        if (idMedico <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
         RespuestaPaciente respuesta = PacienteDAO.obtenerPorId(idMedico);
         return respuesta;
     }
@@ -45,7 +50,7 @@ public class PacienteWS {
     public RespuestaPaciente eliminar(@FormParam("idPaciente") Integer idPaciente) {
         RespuestaPaciente respuesta = null;
 
-        if (idPaciente == null) {
+        if (idPaciente == null || idPaciente <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
