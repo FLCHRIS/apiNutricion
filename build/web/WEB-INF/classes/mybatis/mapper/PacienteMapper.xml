@@ -19,6 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{fechaNacimiento}, #{sexo}, #{peso}, #{estatura}, #{tallaInicial}, #{email}, #{telefono}, #{contrasena}, #{idMedico})
     </insert>
     <update id="editar" parameterType="map" >
-        UPDATE paciente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, sexo = #{sexo}, peso =  #{peso}, estatura = #{estatura}, tallaInicial = #{tallaInicial}, telefono = #{telefono}, contrasena = #{contrasena}, idMedico = #{idMedico} WHERE idPaciente = #{idPaciente}
+        UPDATE paciente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, sexo = #{sexo}, peso =  #{peso}, estatura = #{estatura}, tallaInicial = #{tallaInicial}, telefono = #{telefono}, contrasena = #{contrasena} WHERE idPaciente = #{idPaciente}
     </update>
 </mapper>

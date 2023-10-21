@@ -77,14 +77,14 @@ public class PacienteWS {
     @PUT
     @Path("editar")
     @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaPaciente editar(@FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("fechaNacimiento") String fechaNacimiento, @FormParam("sexo") String sexo, @FormParam("peso") Float peso, @FormParam("estatura") Float estatura, @FormParam("tallaInicial") Integer tallaInicial, @FormParam("telefono") String telefono, @FormParam("contrasena") String contrasena, @FormParam("idMedico") Integer idMedico, @FormParam("idPaciente") Integer idPaciente) {
+    public RespuestaPaciente editar(@FormParam("nombre") String nombre, @FormParam("apellidoPaterno") String apellidoPaterno, @FormParam("apellidoMaterno") String apellidoMaterno, @FormParam("fechaNacimiento") String fechaNacimiento, @FormParam("sexo") String sexo, @FormParam("peso") Float peso, @FormParam("estatura") Float estatura, @FormParam("tallaInicial") Integer tallaInicial, @FormParam("telefono") String telefono, @FormParam("contrasena") String contrasena, @FormParam("idPaciente") Integer idPaciente) {
         RespuestaPaciente respuesta = null;
 
-        if (nombre == null || apellidoPaterno == null || apellidoMaterno == null || fechaNacimiento == null || sexo == null || peso == null || estatura == null || tallaInicial == null || telefono == null || contrasena == null || idMedico == null || idPaciente == null) {
+        if (nombre == null || apellidoPaterno == null || apellidoMaterno == null || fechaNacimiento == null || sexo == null || peso == null || estatura == null || tallaInicial == null || telefono == null || contrasena == null || idPaciente == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
-        respuesta = PacienteDAO.editar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, peso, estatura, tallaInicial, telefono, contrasena, idMedico, idPaciente);
+        respuesta = PacienteDAO.editar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, peso, estatura, tallaInicial, telefono, contrasena, idPaciente);
         
         return respuesta;
     }

@@ -119,7 +119,7 @@ public class PacienteDAO {
         return respuesta;
     }
 
-    public static RespuestaPaciente editar(String nombre, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String sexo, Float peso, Float estatura, Integer tallaInicial, String telefono, String contrasena, Integer idMedico, Integer idPaciente) {
+    public static RespuestaPaciente editar(String nombre, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String sexo, Float peso, Float estatura, Integer tallaInicial, String telefono, String contrasena, Integer idPaciente) {
         RespuestaPaciente respuesta = new RespuestaPaciente();
         respuesta.setError(Boolean.TRUE);
         
@@ -134,7 +134,6 @@ public class PacienteDAO {
         editarPaciente.put("tallaInicial", tallaInicial);
         editarPaciente.put("telefono", telefono);
         editarPaciente.put("contrasena", contrasena);
-        editarPaciente.put("idMedico", idMedico);
         editarPaciente.put("idPaciente", idPaciente);
         
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
