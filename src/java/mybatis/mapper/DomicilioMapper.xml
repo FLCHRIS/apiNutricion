@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="domicilio">
+    <insert id="registrar" parameterType="modelo.pojo.Domicilio">
+        INSERT INTO domicilio (calle, numero, colonia, codigoPostal, idMunicipio, idPaciente) 
+        VALUES (#{calle}, #{numero}, #{colonia}, #{codigoPostal}, #{idMunicipio}, #{idPaciente})
+    </insert>
+    <select id="obtenerDomicilioPaciente" parameterType="int" resultType="modelo.pojo.Domicilio">
+        SELECT do.idDomicilio, do.calle, do.numero, colonia, codigoPostal, do.idMunicipio, 
+        m.idEstado, do.idPaciente 
+        FROM domicilio do 
+        INNER JOIN municipio m ON do.idMunicipio = m.idMunicipio
+        WHERE idPaciente = #{idPaciente}
+    </select>
+</mapper>

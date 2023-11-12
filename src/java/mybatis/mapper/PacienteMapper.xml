@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="paciente">
     <select id="obtenerPorId" parameterType="int" resultType="modelo.pojo.Paciente" >
-        SELECT * FROM paciente WHERE idMedico = #{idMedico}
+        SELECT nombre, apellidoPaterno, apellidoMaterno, idPaciente,contrasena, fechaNacimiento, sexo, peso, estatura, tallaInicial, email, telefono FROM paciente WHERE idMedico = #{idMedico}
     </select>
     <select id="obtenerPaciente" resultType="modelo.pojo.Paciente" parameterType="int">
         SELECT * FROM paciente WHERE idPaciente = #{idPaciente}
@@ -21,4 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="editar" parameterType="map" >
         UPDATE paciente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, sexo = #{sexo}, peso =  #{peso}, estatura = #{estatura}, tallaInicial = #{tallaInicial}, telefono = #{telefono}, contrasena = #{contrasena} WHERE idPaciente = #{idPaciente}
     </update>
+    <update id="subirFoto" parameterType="modelo.pojo.Paciente" >
+        UPDATE paciente SET fotografia = #{fotografia} WHERE idPaciente = #{idPaciente}
+    </update>
+    <select id="obtenerFoto" parameterType="int" resultType="modelo.pojo.Paciente" >
+        SELECT idPaciente, nombre, apellidoPaterno, apellidoMaterno, TO_BASE64(fotografia) AS 'fotografiaBase64' FROM paciente WHERE idPaciente = #{idPaciente}
+    </select>
 </mapper>

@@ -7,13 +7,6 @@ import modelo.pojo.RespuestaPaciente;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
-
-/*
-* TODO obtener paciente por idMedico [x]
-* TODO registrar paciente sin fotografía y iddomicilio [x]
-* TODO Editar paciente, sin editar foto, idDomicilio, correo e id [x]
-* TODO Eliminar paciente [x]
-*/
 public class PacienteDAO {
 
     public static RespuestaPaciente obtenerPorId(Integer idMedico) {
@@ -122,7 +115,7 @@ public class PacienteDAO {
     public static RespuestaPaciente editar(String nombre, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String sexo, Float peso, Float estatura, Integer tallaInicial, String telefono, String contrasena, Integer idPaciente) {
         RespuestaPaciente respuesta = new RespuestaPaciente();
         respuesta.setError(Boolean.TRUE);
-        
+
         HashMap<String, Object> editarPaciente = new HashMap<>();
         editarPaciente.put("nombre", nombre);
         editarPaciente.put("apellidoPaterno", apellidoPaterno);
@@ -135,7 +128,7 @@ public class PacienteDAO {
         editarPaciente.put("telefono", telefono);
         editarPaciente.put("contrasena", contrasena);
         editarPaciente.put("idPaciente", idPaciente);
-        
+
         try (SqlSession conexionDB = MyBatisUtil.getSession()) {
 
             if (conexionDB == null) {
@@ -158,5 +151,54 @@ public class PacienteDAO {
         }
 
         return respuesta;
+    }
+
+    public static RespuestaPaciente subirFotografia(Integer idPaciente, byte[] foto) {
+        RespuestaPaciente respuesta = new RespuestaPaciente();
+        respuesta.setError(Boolean.TRUE);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                Paciente paciente = new Paciente();
+                paciente.setIdPaciente(idPaciente);
+                paciente.setFotografia(foto);
+
+                int filasAfectadas = conexionBD.update("paciente.subirFoto", paciente);
+                conexionBD.commit();
+
+                if (filasAfectadas > 0) {
+                    respuesta.setError(false);
+                    respuesta.setContenido("Fotografía del paciente guardada correctamente");
+                } else {
+                    respuesta.setContenido("Hubo un error al intentar guardar la fotografía del paciente");
+                }
+            } catch (Exception e) {
+                respuesta.setContenido("Error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setContenido("Lo sentimos, no hay conexión para guardar la fotografía.");
+        }
+
+        return respuesta;
+    }
+    
+    public static Paciente obtenerFotografia(int idPaciente) {
+        Paciente paciente = null;
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                paciente = conexionBD.selectOne("paciente.obtenerFoto", idPaciente);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+        
+        return paciente;
     }
 }

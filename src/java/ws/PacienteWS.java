@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws;
 
 import javax.ws.rs.DELETE;
@@ -19,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import modelo.PacienteDAO;
+import modelo.pojo.Paciente;
 import modelo.pojo.RespuestaPaciente;
 
 /**
@@ -87,5 +83,35 @@ public class PacienteWS {
         respuesta = PacienteDAO.editar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, peso, estatura, tallaInicial, telefono, contrasena, idPaciente);
         
         return respuesta;
+    }
+    
+    @PUT
+    @Path("RegistrarFoto/{idPaciente}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaPaciente registrarFotografia(@PathParam("idPaciente") Integer idPaciente, byte[] foto) {
+        RespuestaPaciente respuesta = new RespuestaPaciente();
+        
+        if (idPaciente != null && idPaciente > 0 && foto != null) {
+            respuesta = PacienteDAO.subirFotografia(idPaciente, foto);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return respuesta;
+    }
+
+    @GET
+    @Path("obtenerFoto/{idPaciente}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Paciente obtenerFotografia(@PathParam("idPaciente") Integer idPaciente) {
+        Paciente paciente = null;
+        
+        if (idPaciente != null && idPaciente > 0) {
+            paciente = PacienteDAO.obtenerFotografia(idPaciente);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return paciente;
     }
 }

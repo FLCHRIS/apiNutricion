@@ -17,8 +17,9 @@ public class Paciente {
     private byte[] fotografia;
     private Integer idDomicilio;
     private Integer idMedico;
+    private String fotografiaBase64;
 
-    public Paciente(Integer idPaciente, String nombre, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String sexo, Float peso, Float estatura, Integer tallaInicial, String email, String telefono, String contrasena, byte[] fotografia, Integer idDomicilio, Integer idMedico) {
+    public Paciente(Integer idPaciente, String nombre, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String sexo, Float peso, Float estatura, Integer tallaInicial, String email, String telefono, String contrasena, byte[] fotografia, Integer idDomicilio, Integer idMedico, String fotografiaBase64) {
         this.idPaciente = idPaciente;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -34,6 +35,7 @@ public class Paciente {
         this.fotografia = fotografia;
         this.idDomicilio = idDomicilio;
         this.idMedico = idMedico;
+        this.fotografiaBase64 = fotografiaBase64;
     }
 
     public Paciente() {
@@ -157,6 +159,14 @@ public class Paciente {
 
     public void setIdMedico(Integer idMedico) {
         this.idMedico = idMedico;
+    }
+
+    public String getFotografiaBase64() {
+        return fotografiaBase64;
+    }
+
+    public void setFotografiaBase64(String fotografiaBase64) {
+        this.fotografiaBase64 = fotografiaBase64;
     }
     
 }
