@@ -54,4 +54,33 @@ public class DomicilioDAO {
         return mensaje;
     }
 
+    public static RespuestaPaciente actualizarDomicilioPaciente(Domicilio domicilio) {
+        RespuestaPaciente mensaje = new RespuestaPaciente();
+        mensaje.setError(Boolean.TRUE);
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if (conexionBD != null) {
+            try {
+                int filasAfectadas = conexionBD.update("domicilio.editar", domicilio);
+                conexionBD.commit();
+
+                if (filasAfectadas > 0) {
+                    mensaje.setError(Boolean.FALSE);
+                    mensaje.setContenido("Domicilio del paciente actualizado con éxito");
+                } else {
+                    mensaje.setContenido("No se puede actualizar la información del domicilio enviado.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setContenido("Error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setContenido("Por el momento no hay conexión para guardar domicilio");
+        }
+
+        return mensaje;
+    }
 }

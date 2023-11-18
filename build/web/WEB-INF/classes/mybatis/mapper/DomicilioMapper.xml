@@ -16,4 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN municipio m ON do.idMunicipio = m.idMunicipio
         WHERE idPaciente = #{idPaciente}
     </select>
+    <update id="editar" parameterType="modelo.pojo.Domicilio" >
+        UPDATE domicilio SET calle = #{calle}, numero = #{numero}, colonia = #{colonia}, 
+        codigoPostal = #{codigoPostal} WHERE idDomicilio = #{idDomicilio}
+    </update>
 </mapper>

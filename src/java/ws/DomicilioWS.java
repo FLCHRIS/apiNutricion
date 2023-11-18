@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -41,7 +42,20 @@ public class DomicilioWS {
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+    }
+    
+    @Path("actualizar")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public RespuestaPaciente actualizarDomicilioPaciente(String json) {
+        Gson gson = new Gson();
+        Domicilio domicilio = gson.fromJson(json, Domicilio.class);
+        if (domicilio != null) {
+            return DomicilioDAO.actualizarDomicilioPaciente(domicilio);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
     }
     
     @Path("obtenerDomicilioPaciente/{idPaciente}")
