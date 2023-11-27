@@ -6,7 +6,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="autenticacion">
     <select id="loginEscritorio" parameterType="map" resultType="modelo.pojo.Medico" >
-        SELECT idMedico, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, numeroPersonal, numeroCedulaProfesional, idRol FROM medico WHERE numeroPersonal = #{numeroPersonal} AND contrasena = #{contrasena}
+        SELECT idMedico, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, numeroPersonal, 
+        numeroCedulaProfesional, idRol FROM medico 
+        WHERE numeroPersonal = #{numeroPersonal} AND contrasena = #{contrasena}
+    </select>
+    <select id="loginMobile" parameterType="map" resultType="modelo.pojo.Paciente" >
+        SELECT idPaciente, nombre, apellidoPaterno, apellidoMaterno, 
+        fechaNacimiento, sexo, peso, estatura, tallaInicial, email, 
+        telefono, contrasena, idMedico FROM paciente 
+        WHERE email = #{email} AND contrasena = #{contrasena};
     </select>
 </mapper>
 

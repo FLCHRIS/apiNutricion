@@ -7,7 +7,9 @@ package modelo;
 
 import java.util.HashMap;
 import modelo.pojo.Medico;
+import modelo.pojo.Paciente;
 import modelo.pojo.RespuestaLoginEscritorio;
+import modelo.pojo.RespuestaLoginMobile;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -33,6 +35,36 @@ public class AutenticacionDAO {
                     respuesta.setMedicoSesion(medico);
                 } else {
                     respuesta.setContenido("Numero de personal y/o password incorrectos, favor de verificar");
+                }
+            } catch (Exception e) {
+                respuesta.setContenido("Error: " + e.getMessage());
+            } finally {
+                conexionDB.close();
+            }
+        } else {
+            respuesta.setContenido("No hay conexion con la base de datos");
+        }
+        return respuesta;
+    }
+
+    public static RespuestaLoginMobile verificarSesionMobile(
+            String email, String contrasena) {
+        RespuestaLoginMobile respuesta = new RespuestaLoginMobile();
+        respuesta.setError(Boolean.TRUE);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            try {
+                HashMap<String, String> parametros = new HashMap<>();
+                parametros.put("email", email);
+                parametros.put("contrasena", contrasena);
+                
+                Paciente paciente = conexionDB.selectOne("autenticacion.loginMobile", parametros);
+                if (paciente != null) {
+                    respuesta.setError(Boolean.FALSE);
+                    respuesta.setContenido("Bienvenido(a) " + paciente.getNombre() + " al sistema.");
+                    respuesta.setPaciente(paciente);
+                } else {
+                    respuesta.setContenido("Correo y/o contraseña incorrectos, favor de verificar");
                 }
             } catch (Exception e) {
                 respuesta.setContenido("Error: " + e.getMessage());

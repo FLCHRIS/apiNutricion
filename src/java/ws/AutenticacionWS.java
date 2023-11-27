@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.AutenticacionDAO;
 import modelo.pojo.RespuestaLoginEscritorio;
+import modelo.pojo.RespuestaLoginMobile;
 
 /**
  * REST Web Service
@@ -44,6 +45,19 @@ public class AutenticacionWS {
         RespuestaLoginEscritorio respuesta = null;
         if (!numeroPersona.isEmpty() && !password.isEmpty()) {
             respuesta = AutenticacionDAO.verificarSesionEscritorio(numeroPersona, password);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return respuesta;
+    }
+    @POST
+    @Path("loginMobile")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaLoginMobile iniciarSesionMobile(
+            @FormParam("email") String email,@FormParam("contrasena")  String contrasena) {
+        RespuestaLoginMobile respuesta = null;
+        if (!email.isEmpty() && !contrasena.isEmpty()) {
+            respuesta = AutenticacionDAO.verificarSesionMobile(email, contrasena);
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
